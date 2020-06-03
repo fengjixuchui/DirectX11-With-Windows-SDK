@@ -93,7 +93,6 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -106,7 +105,6 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -121,7 +119,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -138,7 +135,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -171,6 +167,7 @@
     <ClInclude Include="RenderStates.h" />
     <ClInclude Include="ScreenGrab.h" />
     <ClInclude Include="TextureRender.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WavesRender.h" />
     <ClInclude Include="WICTextureLoader.h" />
@@ -195,6 +192,7 @@
     <ClCompile Include="RenderStates.cpp" />
     <ClCompile Include="ScreenGrab.cpp" />
     <ClCompile Include="TextureRender.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="WavesRender.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />

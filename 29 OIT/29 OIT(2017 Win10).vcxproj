@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{C59B4330-3D99-478B-9A93-DD3050EDBBE0}</ProjectGuid>
     <RootNamespace>My29OIT2017Win10</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -171,6 +171,7 @@
     <ClInclude Include="RenderStates.h" />
     <ClInclude Include="ScreenGrab.h" />
     <ClInclude Include="TextureRender.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WavesRender.h" />
     <ClInclude Include="WICTextureLoader.h" />
@@ -195,6 +196,7 @@
     <ClCompile Include="RenderStates.cpp" />
     <ClCompile Include="ScreenGrab.cpp" />
     <ClCompile Include="TextureRender.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="WavesRender.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />

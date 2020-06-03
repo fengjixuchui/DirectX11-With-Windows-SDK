@@ -2,6 +2,8 @@
 #include "Geometry.h"
 #include "d3dUtil.h"
 
+#pragma warning(disable: 26812)
+
 using namespace DirectX;
 using namespace Microsoft::WRL;
 
@@ -10,9 +12,14 @@ void WavesRender::SetMaterial(const Material& material)
 	m_Material = material;
 }
 
-void XM_CALLCONV WavesRender::SetWorldMatrix(DirectX::FXMMATRIX world)
+Transform& WavesRender::GetTransform()
 {
-	XMStoreFloat4x4(&m_WorldMatrix, world);
+	return m_Transform;
+}
+
+const Transform& WavesRender::GetTransform() const
+{
+	return m_Transform;
 }
 
 UINT WavesRender::RowCount() const
@@ -28,8 +35,6 @@ UINT WavesRender::ColumnCount() const
 void WavesRender::Init(UINT rows, UINT cols, float texU, float texV,
 	float timeStep, float spatialStep, float waveSpeed, float damping, float flowSpeedX, float flowSpeedY)
 {
-	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());
-
 	m_NumRows = rows;
 	m_NumCols = cols;
 
@@ -211,7 +216,7 @@ void CpuWavesRender::Draw(ID3D11DeviceContext* deviceContext, BasicEffect& effec
 
 	effect.SetMaterial(m_Material);
 	effect.SetTextureDiffuse(m_pTextureDiffuse.Get());
-	effect.SetWorldMatrix(XMLoadFloat4x4(&m_WorldMatrix));
+	effect.SetWorldMatrix(m_Transform.GetLocalToWorldMatrixXM());
 	effect.SetTexTransformMatrix(XMMatrixScaling(m_TexU, m_TexV, 1.0f) * XMMatrixTranslationFromVector(XMLoadFloat2(&m_TexOffset)));
 	effect.Apply(deviceContext);
 	deviceContext->DrawIndexed(m_IndexCount, 0, 0);
@@ -285,18 +290,20 @@ HRESULT GpuWavesRender::InitResource(ID3D11Device* device, const std::wstring& t
 
 	// 创建计算着色器
 	ComPtr<ID3DBlob> blob;
-	hr = CreateShaderFromFile(L"HLSL\\WavesUpdate_CS.cso", L"HLSL\\WavesUpdate_CS.hlsl", "CS", "cs_5_0", blob.GetAddressOf());
-	if (FAILED(hr))
-		return hr;
-	hr = device->CreateComputeShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, m_pWavesUpdateCS.GetAddressOf());
-	if (FAILED(hr))
-		return hr;
 	hr = CreateShaderFromFile(L"HLSL\\WavesDisturb_CS.cso", L"HLSL\\WavesDisturb_CS.hlsl", "CS", "cs_5_0", blob.GetAddressOf());
 	if (FAILED(hr))
 		return hr;
 	hr = device->CreateComputeShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, m_pWavesDisturbCS.GetAddressOf());
 	if (FAILED(hr))
 		return hr;
+
+	hr = CreateShaderFromFile(L"HLSL\\WavesUpdate_CS.cso", L"HLSL\\WavesUpdate_CS.hlsl", "CS", "cs_5_0", blob.ReleaseAndGetAddressOf());
+	if (FAILED(hr))
+		return hr;
+	hr = device->CreateComputeShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, m_pWavesUpdateCS.GetAddressOf());
+	if (FAILED(hr))
+		return hr;
+
 
 	// 创建缓存计算结果的资源
 	D3D11_TEXTURE2D_DESC texDesc;
@@ -458,7 +465,7 @@ void GpuWavesRender::Draw(ID3D11DeviceContext* deviceContext, BasicEffect& effec
 	effect.SetMaterial(m_Material);
 	effect.SetTextureDiffuse(m_pTextureDiffuse.Get());
 	effect.SetTextureDisplacement(m_pCurrSolutionSRV.Get());	// 需要额外设置位移贴图
-	effect.SetWorldMatrix(XMLoadFloat4x4(&m_WorldMatrix));
+	effect.SetWorldMatrix(m_Transform.GetLocalToWorldMatrixXM());
 	effect.SetTexTransformMatrix(XMMatrixScaling(m_TexU, m_TexV, 1.0f) * XMMatrixTranslationFromVector(XMLoadFloat2(&m_TexOffset)));
 	effect.Apply(deviceContext);
 	deviceContext->DrawIndexed(m_IndexCount, 0, 0);

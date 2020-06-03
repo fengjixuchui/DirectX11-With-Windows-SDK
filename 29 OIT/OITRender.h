@@ -48,7 +48,7 @@ private:
 		int height;
 		int pad1;
 		int pad2;
-	} m_CBFrame;												// 对应OIT.hlsli的常量缓冲区
+	} m_CBFrame{};												// 对应OIT.hlsli的常量缓冲区
 private:
 	ComPtr<ID3D11InputLayout> m_pInputLayout;					// 绘制屏幕的顶点输入布局
 
@@ -70,9 +70,9 @@ private:
 	
 	ComPtr<ID3D11PixelShader> m_pCachePS;						// 临时缓存的像素着色器
 
-	UINT m_FrameWidth;											// 帧像素宽度
-	UINT m_FrameHeight;											// 帧像素高度
-	UINT m_IndexCount;											// 绘制索引数
+	UINT m_FrameWidth = 0;										// 帧像素宽度
+	UINT m_FrameHeight = 0;										// 帧像素高度
+	UINT m_IndexCount = 0;										// 绘制索引数
 };
 
 
